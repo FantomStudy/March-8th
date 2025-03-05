@@ -14,6 +14,9 @@
         background: #fff;
         color: #4d5156;
       }
+      a {
+        font-family: Roboto, sans-serif;
+      }
 
       /* Шапка с логотипом и поиском */
       .header {
@@ -65,18 +68,28 @@
         border-bottom: 1px solid #dfe1e5;
         white-space: nowrap;
         background: #fff;
-        /* position: sticky;
-        top: 70px; */
+        font-size: 12px;
         z-index: 9;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .tabs::-webkit-scrollbar {
+        display: none;
       }
 
       .tab {
-        padding: 0px 16px;
+        padding: 6px 12px;
         font-size: 14px;
         color: #5f6368;
         text-align: center;
       }
-
+      .tab a {
+        color: #5f6368;
+        text-decoration: none;
+      }
+      .tab.tab.active a {
+        color: #1a73e8;
+      }
       .tab.active {
         color: #1a73e8;
         border-bottom: 2px solid #1a73e8;
@@ -100,107 +113,66 @@
         display: block;
         border-radius: 5px;
       }
-      /* Мобильная адаптация */
-      @media (max-width: 600px) {
-        /* .search-bar {
-          font-size: 14px;
-          padding: 8px 36px 8px 8px;
-          background-size: 20px;
-        } */
-        .tabs {
-          font-size: 12px;
-          top: 60px;
-        }
-        .tab {
-          padding: 6px 12px;
-        }
-      }
     </style>
   </head>
   <body>
-    <!-- Шапка с логотипом и поиском -->
     <div class="header">
       <div class="logo"></div>
     </div>
     <div class="search-container">
       <input type="text" class="search-bar" value="Лучшая девушка" readonly />
     </div>
-    <!-- Строка вкладок -->
     <div class="tabs">
-      <div class="tab">Все</div>
-      <div class="tab active">Картинки</div>
+      <div class="tab"><a href="./main.html">Все</a></div>
+      <div class="tab active"><a href="./index.html">Картинки</a></div>
       <div class="tab">Видео</div>
       <div class="tab">Новости</div>
       <div class="tab">Карты</div>
     </div>
 
     <!-- Сетка изображений -->
-    <div class="image-grid">
-      <div class="image-item">
-        <img src="./images/photo_2025-03-05_15-20-33.jpg" alt="Изображение 1" />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_1_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_2_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_3_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_4_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_5_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_6_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_7_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_8_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_9_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
-      <div class="image-item">
-        <img
-          src="./images/photo_10_2025-03-05_14-16-40.jpg"
-          alt="Изображение 2"
-        />
-      </div>
+    <div id="image-grid" class="image-grid"></div>
+    <script>
+      const imagePaths = Array.from(
+        { length: 37 },
+        (_, i) => `./images/other/photo_${i + 1}_2025-03-05_18-22-41.jpg`
+      );
 
-      <!-- Добавьте больше изображений по необходимости -->
-    </div>
+      function createImageItem(src, alt) {
+        const div = document.createElement("div");
+        div.className = "image-item";
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = alt;
+        div.appendChild(img);
+        return div;
+      }
+
+      // Получаем контейнер для сетки
+      const imageGrid = document.getElementById("image-grid");
+
+      // Равномерное распределение изображений по колонкам
+      const column1 = [];
+      const column2 = [];
+
+      imagePaths.forEach((path, index) => {
+        if (index % 2 === 0) {
+          column1.push(path);
+        } else {
+          column2.push(path);
+        }
+      });
+      // Добавляем изображения в первую колонку
+      column1.forEach((path, index) => {
+        const imageItem = createImageItem(path, `Изображение ${index * 2 + 1}`);
+        imageGrid.appendChild(imageItem);
+      });
+
+      // Добавляем изображения во вторую колонку
+      column2.forEach((path, index) => {
+        const imageItem = createImageItem(path, `Изображение ${index * 2 + 2}`);
+        imageGrid.appendChild(imageItem);
+      });
+    </script>
   </body>
 </html>

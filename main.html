@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1 - Поиск в Google</title>
+    <style>
+      /* Основные стили */
+      html,
+      body {
+        font-family: Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: #4d5156;
+      }
+      a {
+        font-family: Roboto, sans-serif;
+      }
+      /* Шапка с логотипом и поиском */
+      .header {
+        padding: 10px;
+        padding-bottom: 0;
+        background: #fff;
+        z-index: 10;
+      }
+
+      .logo {
+        display: block;
+        margin: 10px auto 0;
+        width: 112px;
+        height: 45px;
+        background: url("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png")
+          no-repeat;
+        background-size: contain;
+      }
+
+      .search-container {
+        padding: 10px;
+        background: #fff;
+        z-index: 10;
+        /* position: sticky;
+        top: 0;
+        left: 0;
+        right: 0; */
+      }
+      .search-bar {
+        width: 100%;
+        padding: 12px 40px 12px 14px;
+        border: 1px solid #dfe1e5;
+        border-radius: 24px;
+        font-size: 16px;
+        outline: none;
+        box-shadow: none;
+        box-sizing: border-box;
+        background: url("https://www.gstatic.com/images/branding/googlemic/2x/googlemic_color_24dp.png")
+          no-repeat right 10px center;
+        background-size: 24px;
+      }
+
+      /* Строка вкладок */
+      .tabs {
+        display: flex;
+        overflow-x: auto;
+        justify-content: space-around;
+        padding: 5px 0 5px;
+        border-bottom: 1px solid #dfe1e5;
+        white-space: nowrap;
+        background: #fff;
+        font-size: 12px;
+        z-index: 9;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        padding: 6px 12px;
+        font-size: 14px;
+        color: #5f6368;
+        text-align: center;
+      }
+      .tab a {
+        color: #5f6368;
+        text-decoration: none;
+      }
+      .tab.tab.active a {
+        color: #1a73e8;
+      }
+
+      .tab.active {
+        color: #1a73e8;
+        border-bottom: 2px solid #1a73e8;
+      }
+
+      .content {
+        padding: 10px;
+      }
+
+      .person-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        padding: 10px 0;
+        font-size: 24px;
+        color: #001f27;
+      }
+      .person-title {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .person-name {
+        line-height: 32px;
+        margin-right: 10px;
+      }
+      .person-role {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        margin-top: 4px;
+      }
+      .person-buttons {
+        display: flex;
+        grid-gap: 8px;
+      }
+      .person-buttons .more-button {
+        background: #fff;
+        border: none; /* Убираем обводку */
+        border-radius: 50%; /* Делаем круглой */
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+        color: #5f6368;
+        cursor: default;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        line-height: 1;
+      }
+      .person-buttons .more-button::after {
+        content: "…"; /* Три точки внутри кнопки */
+        font-size: 16px;
+      }
+      .person-buttons .sub-button {
+        font-size: 12px;
+        line-height: 16px;
+        padding: 8px 16px;
+        border-radius: 100px;
+        border: 1px solid #a9acaa;
+      }
+      .person-actions {
+        display: flex;
+        gap: 5px;
+        padding: 10px 0;
+        overflow-x: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .action-button {
+        background: #e8f2f7;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 14px;
+        color: #001f27;
+        cursor: default;
+        font-weight: 500; /* Жирность для кнопок */
+      }
+      .action-button.active {
+        background-color: #c6e8f5;
+        border-color: #c2e7ff;
+      }
+
+      .slider {
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .slider::-webkit-scrollbar,
+      .section-images-::-webkit-scrollbar,
+      .person-actions::-webkit-scrollbar {
+        display: none;
+      }
+      .slider img {
+        min-width: 175px;
+        height: 250px;
+        display: inline-block;
+        vertical-align: top;
+        object-fit: cover;
+      }
+      .slider img:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      .slider img:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+
+      .section {
+        margin: 10px 0;
+        background: #e8f2f7;
+        border-radius: 16px;
+        padding: 12px;
+      }
+
+      .section-title {
+        font-size: 16px;
+        color: #001f27;
+        margin-bottom: 10px;
+      }
+
+      .section-images {
+        display: flex;
+        gap: 5px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .section-item {
+        font-size: 14px;
+        min-width: 100px;
+        display: flex;
+        flex-direction: column;
+        grid-gap: 5px;
+        align-items: center;
+        text-align: center;
+        scroll-snap-align: start;
+      }
+      .section-image {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      .section-description {
+        font-size: 14px;
+        color: #5f6368;
+        margin-top: 5px;
+        font-weight: 400; /* Нормальная жирность для текста */
+      }
+      .overview {
+        margin: 10px 0;
+        padding: 12px;
+        color: #001f27;
+        background: #e8f2f7;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+      .overview a {
+        text-decoration: none;
+        color: #1a73e8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo"></div>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-bar" value="Лучшая девушка" readonly />
+    </div>
+    <div class="tabs">
+      <div class="tab active"><a href="./main.html">Все</a></div>
+      <div class="tab"><a href="./index.html">Картинки</a></div>
+      <div class="tab">Видео</div>
+      <div class="tab">Новости</div>
+      <div class="tab">Карты</div>
+    </div>
+
+    <div class="content">
+      <div class="person-wrapper">
+        <div class="person-title">
+          <span class="person-name">Надежда Зубкова</span>
+          <sdiv class="person-buttons">
+            <span class="more-button"></span>
+            <span class="sub-button">Подписаться</span>
+          </sdiv>
+        </div>
+        <span class="person-role">Лучшая девушка</span>
+      </div>
+
+      <div class="person-actions">
+        <button class="action-button active">Обзор</button>
+        <button class="action-button">Песни</button>
+        <button class="action-button">Фильмы</button>
+        <button class="action-button">Альбомы</button>
+        <button class="action-button">Слушать</button>
+      </div>
+
+      <div class="slider">
+        <img
+          src="./images/other/photo_21_2025-03-05_18-22-41.jpg"
+          alt="Slide"
+        />
+        <img
+          src="./images/other/photo_26_2025-03-05_18-22-41.jpg"
+          alt="Slide"
+        />
+        <img
+          src="./images/other/photo_19_2025-03-05_18-22-41.jpg"
+          alt="Slide"
+        />
+        <img
+          src="./images/other/photo_12_2025-03-05_18-22-41.jpg"
+          alt="Slide"
+        />
+        <img
+          src="./images/other/photo_16_2025-03-05_18-22-41.jpg"
+          alt="Slide"
+        />
+        <img
+          src="./images/other/photo_10_2025-03-05_18-22-41.jpg"
+          alt="Slide"
+        />
+      </div>
+
+      <div class="overview">
+        Надежда Зубкова - специалист в области 3д-моделирования и строительства
+        домиков в игре Minecraft. Ценитель различных видов чая, вкусностей и
+        прикольных вещей. Много работает. Самая красивая девушка в мире...
+        <a
+          href="https://ru.wikipedia.org/w/index.php?go=%D0%9F%D0%B5%D1%80%D0%B5%D0%B9%D1%82%D0%B8&search=%D0%9B%D1%8E%D0%B1%D0%BE%D0%B2%D1%8C&title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F%3A%D0%9F%D0%BE%D0%B8%D1%81%D0%BA&ns0=1"
+          >Смотреть больше</a
+        >
+      </div>
+
+      <!-- Секция с песнями -->
+      <div class="section">
+        <div class="section-title">Связанные темы</div>
+        <div class="section-images">
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/346817113284958.webp"
+              alt="любимое 2"
+            />
+            Солнце
+          </div>
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/photo_2024-09-22_12-11-34.jpg"
+              alt="любимое 9"
+            />
+            Арзамасцев Даниил
+          </div>
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/f2e7aaf7c7110521c5cff37e1499823d.jpg"
+              alt="любимое 5"
+            />
+            Облепиховый чай
+          </div>
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/6732194266.jpg"
+              alt="любимое 4"
+            />
+            Кофе
+          </div>
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/6470885994.jpg"
+              alt="любимое 3"
+            />
+            Баунти
+          </div>
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/i (1).webp"
+              alt="любимое 7"
+            />
+            Авокадо
+          </div>
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/175030_czerwona_roza_liscie.jpg"
+              alt="любимое 1"
+            />
+            Цветочки
+          </div>
+          <div class="section-item">
+            <img
+              class="section-image"
+              src="./images/favorite/i.webp"
+              alt="любимое 8"
+            />
+            Собачки
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
