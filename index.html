@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1 - Поиск в Google</title>
+    <style>
+      /* Основные стили */
+      html,
+      body {
+        font-family: Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: #4d5156;
+      }
+
+      /* Шапка с логотипом и поиском */
+      .header {
+        padding: 10px;
+        padding-bottom: 0;
+        background: #fff;
+        z-index: 10;
+      }
+
+      .logo {
+        display: block;
+        margin: 10px auto 0;
+        width: 112px;
+        height: 45px;
+        background: url("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png")
+          no-repeat;
+        background-size: contain;
+      }
+
+      .search-container {
+        padding: 10px;
+        background: #fff;
+        z-index: 10;
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+      .search-bar {
+        width: 100%;
+        padding: 12px 40px 12px 14px;
+        border: 1px solid #dfe1e5;
+        border-radius: 24px;
+        font-size: 16px;
+        outline: none;
+        box-shadow: none;
+        box-sizing: border-box;
+        background: url("https://www.gstatic.com/images/branding/googlemic/2x/googlemic_color_24dp.png")
+          no-repeat right 10px center;
+        background-size: 24px;
+      }
+
+      /* Строка вкладок */
+      .tabs {
+        display: flex;
+        overflow-x: auto;
+        justify-content: space-around;
+        padding: 5px 0 5px;
+        border-bottom: 1px solid #dfe1e5;
+        white-space: nowrap;
+        background: #fff;
+        /* position: sticky;
+        top: 70px; */
+        z-index: 9;
+      }
+
+      .tab {
+        padding: 0px 16px;
+        font-size: 14px;
+        color: #5f6368;
+        text-align: center;
+      }
+
+      .tab.active {
+        color: #1a73e8;
+        border-bottom: 2px solid #1a73e8;
+      }
+
+      /* Сетка изображений */
+      .image-grid {
+        column-count: 2; /* Две колонки */
+        column-gap: 5px; /* Отступ между колонками */
+        padding: 10px;
+      }
+
+      .image-item {
+        break-inside: avoid; /* Предотвращает разрыв изображения между колонками */
+        margin-bottom: 5px; /* Отступ между изображениями в одной колонке */
+      }
+
+      .image-item img {
+        width: 100%; /* Ширина подстраивается под колонку */
+        height: auto; /* Высота сохраняет пропорции */
+        display: block;
+        border-radius: 5px;
+      }
+      /* Мобильная адаптация */
+      @media (max-width: 600px) {
+        /* .search-bar {
+          font-size: 14px;
+          padding: 8px 36px 8px 8px;
+          background-size: 20px;
+        } */
+        .tabs {
+          font-size: 12px;
+          top: 60px;
+        }
+        .tab {
+          padding: 6px 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Шапка с логотипом и поиском -->
+    <div class="header">
+      <div class="logo"></div>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-bar" value="Лучшая девушка" readonly />
+    </div>
+    <!-- Строка вкладок -->
+    <div class="tabs">
+      <div class="tab">Все</div>
+      <div class="tab active">Картинки</div>
+      <div class="tab">Видео</div>
+      <div class="tab">Новости</div>
+      <div class="tab">Карты</div>
+    </div>
+
+    <!-- Сетка изображений -->
+    <div class="image-grid">
+      <div class="image-item">
+        <img src="./photo_10_2025-03-05_14-16-40.jpg" alt="Изображение 1" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_1_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_2_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_3_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_4_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_5_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_6_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_7_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_8_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_9_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+      <div class="image-item">
+        <img src="./photo_10_2025-03-05_14-16-40.jpg" alt="Изображение 2" />
+      </div>
+
+      <!-- Добавьте больше изображений по необходимости -->
+    </div>
+  </body>
+</html>
